@@ -6,8 +6,17 @@ const ReviewSchema = Schema({
     },
 
     calificacion:{
-        type: String,
+        type: Number,
+        default: 0
     },
+    usuario: {
+        required: true,
+        ref: 'Usuario',
+        type: Schema.Types.ObjectId,
+    }
+
+
+
 });
 
 ReviewSchema.method('toJSON', function (){

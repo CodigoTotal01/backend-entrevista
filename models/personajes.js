@@ -2,11 +2,11 @@ const {Schema, model} = require('mongoose')
 
 //Nombre completo del usuario, nickname, email y contraseña.
 const PersonajesSchema = Schema({
-    nombreSerie:{
+    nombreSerie: {
         type: String,
         required: true
     },
-    nickname:{
+    nickname: {
         type: String,
         required: true,
         unique: true
@@ -16,7 +16,7 @@ const PersonajesSchema = Schema({
         required: true,
         unique: true
     },
-    ocupaciones:{
+    ocupaciones: {
         type: String,
         required: true,
     },
@@ -24,16 +24,20 @@ const PersonajesSchema = Schema({
         type: String,
     },
     review: {
-        required: true,
         ref: 'Review',
+        type: Schema.Types.ObjectId,
+    },
+    usuario: {
+        required: true,
+        ref: 'Usuario',
         type: Schema.Types.ObjectId,
     }
 });
 
 
 //Mostrar la informacion necesaria al consultar a la coleccion de usuarios
-PersonajesSchema.method('toJSON', function (){
-    const { __v, ...object} = this.toObject();
+PersonajesSchema.method('toJSON', function () {
+    const {__v, ...object} = this.toObject();
     return object
 });
 

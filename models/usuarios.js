@@ -22,13 +22,7 @@ const UsuarioSchema = Schema({
     },
     img: {
         type: String,
-    },
-    personajes: {
-        required: true,
-        ref: 'Personajes',
-        type: Schema.Types.ObjectId,
     }
-
 });
 
 

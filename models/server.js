@@ -10,6 +10,17 @@ class Server{
         this.port = process.env.PORT;
         this.conectarDB();
         this.middlewares();
+        this.routes();
+
+        this.paths = {
+            auth: '/api/auth',
+            usuarios: '/api/usuarios',
+            personajes: '/api/personajes',
+            review: '/api/review.js',
+            uploads: '/api/uploads'
+        }
+
+
     }
 
     async conectarDB(){
@@ -27,6 +38,18 @@ class Server{
             console.log('Servidor corriendo ', this.port);
         })
     }
+
+
+    routes() {
+        //pero mira el path sera como la ruta inicial, fijate en el nombre que se concatena con las nuevas rutas
+        this.app.use(this.paths.auth, require('../routes/auth'));
+        this.app.use(this.paths.usuarios, require('../routes/usuarios'));
+        //ruta -> productos
+        this.app.use(this.paths.productos, require('../routes/producto'));
+        this.app.use(this.paths.uploads, require('../routes/uploads'));
+
+    }
+
 
 }
 
