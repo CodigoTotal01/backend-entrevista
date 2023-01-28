@@ -1,13 +1,9 @@
 const mongoose = require('mongoose');
-
-
 mongoose.set('strictQuery', false);
+
 const dbConnection = async() => {
-
     try {
-
         await mongoose.connect( process.env.MONGODB_CNN, {
-            //options usecreateindex, usefindandmodify are not supported
             useNewUrlParser: true,
 
             useUnifiedTopology: true
@@ -19,11 +15,7 @@ const dbConnection = async() => {
         console.log(error);
         throw new Error('Error a la hora de iniciar la base de datos');
     }
-
-
 }
-
-
 
 module.exports = {
     dbConnection
