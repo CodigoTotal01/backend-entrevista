@@ -1,7 +1,9 @@
-const  validarCampos = require('../middlewares/validar-campos');
-const  validarJWT = require('../middlewares/validar-jwt');
+const validarJWT = require('../middlewares/validar-jwt');
+const validaCampos= require('../middlewares/validar-campos');
+
+//constantes que importan tood lo de estos archivos
 
 module.exports = {
-    ...validarCampos,
-    ...validarJWT
+    ...validaCampos,
+    ...validarJWT,
 }

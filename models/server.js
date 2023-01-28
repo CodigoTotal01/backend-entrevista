@@ -12,16 +12,8 @@ class Server{
         this.middlewares();
         this.routes();
 
-        this.paths = {
-            auth: '/api/auth',
-            usuarios: '/api/usuarios',
-            personajes: '/api/personajes',
-            review: '/api/review.js',
-            uploads: '/api/uploads'
-        }
-
-
     }
+
 
     async conectarDB(){
         await dbConnection();
@@ -41,16 +33,12 @@ class Server{
 
 
     routes() {
-        //pero mira el path sera como la ruta inicial, fijate en el nombre que se concatena con las nuevas rutas
-        this.app.use(this.paths.auth, require('../routes/auth'));
-        this.app.use(this.paths.usuarios, require('../routes/usuarios'));
-        //ruta -> productos
-        this.app.use(this.paths.productos, require('../routes/producto'));
-        this.app.use(this.paths.uploads, require('../routes/uploads'));
 
+        this.app.use('/api/auth', require('../routes/auth'));
+        this.app.use('/api/usuarios', require('../routes/usuarios'));
     }
 
 
 }
 
-module.exports = Server;
+module.exports = {Server};

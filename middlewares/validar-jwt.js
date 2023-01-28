@@ -2,7 +2,7 @@
 //! ellos si pueden enviar las respuestas, al cambio las validaciones empleancdo el check por lo generar retornan un boejeto disitnto con errrores
 const { request, response } = require("express")
 const jwt = require('jsonwebtoken');
-const Usuario = require('../models')
+const Usuario = require('../models/usuarios')
 
 
 const validarJWT = async(req = request, res = response, next) => {
