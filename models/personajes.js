@@ -6,30 +6,22 @@ const PersonajesSchema = Schema({
         type: String,
         required: true
     },
-    especie: {
+    calificacion: {
+        required: true,
+        type: Number,
+    },
+    comentario: {
+        required: true,
         type: String,
-        required: true,
-    },
-    genero: {
-        type: String,
-        required: true,
-    },
-    estado: {
-        type: String,
-        required: true,
-    },
-    usuario: {
-        required: true,
-        ref: 'Usuario',
-        type: Schema.Types.ObjectId,
-    },
-    review: {
-        ref: 'Review',
-        type: Schema.Types.ObjectId,
     },
     img: {
         type: String,
     },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
+    }
 });
 
 
