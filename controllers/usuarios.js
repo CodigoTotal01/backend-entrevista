@@ -61,7 +61,51 @@ const crearUsuario = async (req, res = response) => {
 
 };
 
+const actulizarUsuario = async (req, res = response) => {
+    const uid = req.params.id;
+    try {
+        const usuarioDB = await Usuario.findById(uid);
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con ese id'
+            });
+        }
+        //campos enviados desde el cliente, extraer campos
+        const {nickname, nombre } = req.body;
+
+
+        if (usuarioDB.nickname !== nickname) {
+            //cambiar a un correo electronico que existe en mi base de datos
+            const existeNickname = await Usuario.findOne({nickname});
+
+            if (existeNickname) {
+                return res.status(400).json({
+                    ok: false, msg: "Ya existe un usuario con este nickname"
+                })
+            }
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, {nickname, nombre}, {new: true});
+
+
+        res.status(200).json({
+            ok: true,
+            usuario: usuarioActualizado
+        });
+
+    } catch
+        (e) {
+        console.log(e);
+        res.status(500).json({
+            ok: false,
+            msg: "Error al intentar actualizar al usuario"
+        });
+    }
+
+};
 
 module.exports = {
     crearUsuario,
+    actulizarUsuario
 }

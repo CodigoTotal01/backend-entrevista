@@ -3,11 +3,11 @@ const Usuario = require('../models/usuarios') // entity > mongoose
 const bcryptjs = require('bcryptjs');
 const {generarJWT} = require("../helpers/jwt");
 
-
-//validar - no crear
 const login = async (req, res = response) => {
 
     const { email, password } = req.body;
+
+
     try {
         //verificar email
         const usuarioDB = await Usuario.findOne({ email });
@@ -19,8 +19,9 @@ const login = async (req, res = response) => {
             })
         }
 
-        //verificar contraseña _ encriptada
-        const validPassword = bcrypt.compareSync(password, usuarioDB.password)
+
+        const validPassword = bcryptjs.compareSync(password, usuarioDB.password); //bollean
+
 
         if (!validPassword) {
             res.status(404).json({

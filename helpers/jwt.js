@@ -2,6 +2,8 @@
 const jwt = require('jsonwebtoken')
 
 
+
+//debemos esperar este proceso antes de continuar
 const generarJWT = async (uid) => {
 
 

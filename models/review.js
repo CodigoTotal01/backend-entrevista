@@ -1,27 +1,20 @@
 const {Schema, model} = require('mongoose')
 
-const ReviewSchema = Schema({
+const ReviewsSchema = Schema({
     comentario:{
         type: String,
+        require: true
     },
 
     calificacion:{
         type: Number,
         default: 0
-    },
-    usuario: {
-        required: true,
-        ref: 'Usuario',
-        type: Schema.Types.ObjectId,
     }
-
-
-
 });
 
-ReviewSchema.method('toJSON', function (){
+ReviewsSchema.method('toJSON', function (){
     const { __v, ...object} = this.toObject();
     return object
 });
 
-module.exports = model("Review", ReviewSchema);
+module.exports = model("Review", ReviewsSchema);

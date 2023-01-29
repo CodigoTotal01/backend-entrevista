@@ -2,36 +2,34 @@ const {Schema, model} = require('mongoose')
 
 //Nombre completo del usuario, nickname, email y contraseña.
 const PersonajesSchema = Schema({
-    nombreSerie: {
+    nombre: {
         type: String,
         required: true
     },
-    nickname: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    ocupaciones: {
+    especie: {
         type: String,
         required: true,
     },
-    img: {
+    genero: {
         type: String,
+        required: true,
     },
-    review: {
-        ref: 'Review',
-        type: Schema.Types.ObjectId,
+    estado: {
+        type: String,
+        required: true,
     },
     usuario: {
         required: true,
         ref: 'Usuario',
         type: Schema.Types.ObjectId,
-    }
+    },
+    review: {
+        ref: 'Review',
+        type: Schema.Types.ObjectId,
+    },
+    img: {
+        type: String,
+    },
 });
 
 
@@ -42,4 +40,4 @@ PersonajesSchema.method('toJSON', function () {
 });
 
 
-module.exports = model("Personajes", PersonajesSchema);
+module.exports = model("Personaje", PersonajesSchema);
