@@ -2,6 +2,8 @@ const express = require('express')
 require('dotenv').config(); //permite acceder a las constates en el archivo .env
 let cors = require('cors') //*
 const { dbConnection } = require('../database/config');
+const fileUpload = require('express-fileupload');
+
 
 
 class Server{
@@ -23,6 +25,8 @@ class Server{
         this.app.use(express.static('public'));
         this.app.use(cors());
         this.app.use(express.json());
+        //File-Upload-cargar de manera global
+
     }
 
     listen(){
@@ -35,6 +39,7 @@ class Server{
         this.app.use('/api/auth', require('../routes/auth'));
         this.app.use('/api/usuarios', require('../routes/usuarios'));
         this.app.use('/api/personajes', require('../routes/personajes'));
+        this.app.use('/api/uploads', require('../routes/uploads'));
     }
 }
 
