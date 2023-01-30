@@ -12,7 +12,7 @@ const {subirArchivo} = require("../helpers/subir-archivo");
 const fileUpload = async (req, res = response) => {
 
         const {id, coleccion} = req.params;
-        let model;
+        let modelo;
 
         switch (coleccion) {
             case 'usuarios':
@@ -34,7 +34,8 @@ const fileUpload = async (req, res = response) => {
                 return res.status(500).json({msg: "se me olvido validar esto"})
         }
 
-        //si existe, trae consigo la imagen -> eliminar la anterior
+        //si existe, trae consigo la imagen -> eliminar la anterio
+
         if (modelo.img) {
             //Borrar de del servidor
             const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
@@ -57,7 +58,46 @@ const fileUpload = async (req, res = response) => {
     }
 
 
+
+const cargarImagen= async (req, res = response) => {
+
+    const {id, coleccion} = req.params;
+    let modelo;
+
+    switch (coleccion) {
+        case 'usuarios':
+            modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({msg: `No existe el usuario con el id: ${id}`})
+
+            }
+            break;
+        case 'personajes':
+            modelo = await Personaje.findById(id);
+            if (!modelo) {
+                return res.status(400).json({msg: `No existe el personaje con el id: ${id}`})
+            }
+            break;
+
+
+        default:
+            return res.status(500).json({msg: "se me olvido validar esto"})
+    }
+
+    //si existe, trae consigo la imagen -> eliminar la anterior
+    if (modelo.img) {
+        //Borrar de del servidor
+        const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
+        if (fs.existsSync(pathImagen)) {
+            return res.sendFile(pathImagen) //retornar u narchivo
+        }
+    }
+    const pathImagenNotFound = path.join(__dirname, '../uploads/no-image.jpg');
+
+    return res.sendFile(pathImagenNotFound) //retornar u narchivo
+}
+
 module.exports = {
     fileUpload,
-    // retornaImagen
+    cargarImagen
 }

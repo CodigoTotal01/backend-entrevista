@@ -4,7 +4,7 @@
 
 const {Router} = require('express')
 const {validarJWT} = require("../middlewares/validar-jwt");
-const {fileUpload, retornaImagen, cargarArchivo} = require("../controllers/uploads");
+const {fileUpload, retornaImagen, cargarArchivo, cargarImagen} = require("../controllers/uploads");
 const expressFileUpload =require('express-fileupload')
 const {check} = require("express-validator");
 const {coleccionesPermitidas} = require("../helpers/db-validators");
@@ -21,5 +21,9 @@ router.put('/:coleccion/:id',[
     check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','personajes'] )),
     validarCampos
 ] ,fileUpload );
-// router.get('/:tipo/:foto' ,retornaImagen );
+router.get('/:coleccion/:id', [
+    check('id','El id debe de ser de mongo').isMongoId(),
+    check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','personajes'] ) ),
+    validarCampos
+], cargarImagen  );
 module.exports = router;
