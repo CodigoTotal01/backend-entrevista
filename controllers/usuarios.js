@@ -9,7 +9,7 @@ const crearUsuario = async (req, res = response) => {
     const {email, password, nombre, nickname} = req.body;
 
     try {
-
+        //verificar si ya existe el email que es unico
         const existeEmail = await Usuario.findOne({email});
 
         if (existeEmail) {
@@ -19,8 +19,7 @@ const crearUsuario = async (req, res = response) => {
             });
         }
 
-
-            //verificar si ya existe el nickname
+        //verificar si ya existe el nickname que es unico
         const existeNickname = await Usuario.findOne({nickname});
 
         if (existeNickname) {
@@ -30,21 +29,19 @@ const crearUsuario = async (req, res = response) => {
             });
         }
 
-        //si todo pasa entonces generar usuarios
+        //Generar ususiario si son nuevos datos
         const usuario = new Usuario(req.body);
-
 
         //encriptar contraseña
         const salt = bcryptjs.genSaltSync();
         usuario.password = bcryptjs.hashSync(password, salt);
 
-        // Guardar usuario
+        // Guardar usuario en db
         await usuario.save();
 
-        //segun lo interpresa moongose
         const token = await generarJWT(usuario.id);
 
-        res.json({
+        return res.json({
             ok: true,
             usuario,
             token
@@ -52,10 +49,9 @@ const crearUsuario = async (req, res = response) => {
 
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
+        return  res.status(500).json({
             ok: false,
-            msg: 'Error inesperado... revisar logs'
+            msg: 'No se pudo crear el usuario'
         });
     }
 
@@ -71,12 +67,11 @@ const actulizarUsuario = async (req, res = response) => {
                 msg: 'No existe un usuario con ese id'
             });
         }
-        //campos enviados desde el cliente, extraer campos
+        //datos desde el cliente
         const {nickname, nombre } = req.body;
 
 
         if (usuarioDB.nickname !== nickname) {
-            //cambiar a un correo electronico que existe en mi base de datos
             const existeNickname = await Usuario.findOne({nickname});
 
             if (existeNickname) {
@@ -85,19 +80,17 @@ const actulizarUsuario = async (req, res = response) => {
                 })
             }
         }
-
+        //actualizando nickname y nombre (imagen desde otro servicio rest)
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, {nickname, nombre}, {new: true});
 
-
-        res.status(200).json({
+        return res.status(200).json({
             ok: true,
             usuario: usuarioActualizado
         });
 
-    } catch
-        (e) {
-        console.log(e);
-        res.status(500).json({
+    } catch (e) {
+
+        return res.status(500).json({
             ok: false,
             msg: "Error al intentar actualizar al usuario"
         });

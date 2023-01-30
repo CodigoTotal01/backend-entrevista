@@ -4,7 +4,6 @@ const Personaje = require('../models/personajes')
 const Usuario = require('../models/usuarios')
 const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
-const { actualizarImagen } = require('../helpers/actualizar-imagen');
 const {subirArchivo} = require("../helpers/subir-archivo");
 
 
@@ -12,6 +11,7 @@ const {subirArchivo} = require("../helpers/subir-archivo");
 const fileUpload = async (req, res = response) => {
 
         const {id, coleccion} = req.params;
+
         let modelo;
 
         switch (coleccion) {
@@ -31,30 +31,29 @@ const fileUpload = async (req, res = response) => {
 
 
             default:
-                return res.status(500).json({msg: "se me olvido validar esto"})
+                return res.status(500).json({msg: "se me olvido añadir  una nueva colleccion, hablar con el jefe de proyecto"})
         }
 
-        //si existe, trae consigo la imagen -> eliminar la anterio
-
+        //Si tiene imagen, borrarla del servidor para sustituirlo con la nueva
         if (modelo.img) {
-            //Borrar de del servidor
             const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
             if (fs.existsSync(pathImagen)) {
-                fs.unlinkSync(pathImagen); // la elimina en el servidor
+                fs.unlinkSync(pathImagen);
             }
         }
 
-        //! despues de eliminarlo recien se añade ña nueva
+        // cuando ya no esta la iamgen en el servidor, subir la imagen
         try {
-
             modelo.img = await subirArchivo(req.files, undefined,coleccion);
         } catch (error) {
-            console.log(error)
-            return  res.status(400).json({error: "se malogro"})
+            return  res.status(400).json({ok: false, error})
         }
 
         await modelo.save();
-    return res.json({modelo})
+        return res.json({
+            ok: true,
+            modelo
+        })
     }
 
 
@@ -62,6 +61,7 @@ const fileUpload = async (req, res = response) => {
 const cargarImagen= async (req, res = response) => {
 
     const {id, coleccion} = req.params;
+
     let modelo;
 
     switch (coleccion) {
@@ -84,17 +84,16 @@ const cargarImagen= async (req, res = response) => {
             return res.status(500).json({msg: "se me olvido validar esto"})
     }
 
-    //si existe, trae consigo la imagen -> eliminar la anterior
+
     if (modelo.img) {
-        //Borrar de del servidor
         const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
         if (fs.existsSync(pathImagen)) {
-            return res.sendFile(pathImagen) //retornar u narchivo
+            return res.sendFile(pathImagen)
         }
     }
-    const pathImagenNotFound = path.join(__dirname, '../uploads/no-image.jpg');
-
-    return res.sendFile(pathImagenNotFound) //retornar u narchivo
+    //si el modelo no tiene aun una imagen, mostrar una por defecto
+    const pathImagenNotFound = path.join(__dirname, '../assets/no-image.jpg');
+    return res.sendFile(pathImagenNotFound)
 }
 
 module.exports = {

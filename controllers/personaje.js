@@ -56,11 +56,11 @@ const personajesDelUsuario = async (req, res = response) => {
 
 }
 
-const buscarPersonajeDelUsuario = async (req, res = response) => {
+const buscarPersonajesDelUsuario = async (req, res = response) => {
     const uid = req.uid;
     const { nombre  } = req.params;
 
-    const regex = new RegExp(nombre, 'i'); //insencible
+    const regex = new RegExp(nombre, 'i');  //Expresion regular para ignorar mayusculas y minusculas
 
     try{
         const personajes = await Personaje.find({nombre: regex, usuario: uid});
@@ -82,5 +82,5 @@ const buscarPersonajeDelUsuario = async (req, res = response) => {
 module.exports = {
    crearPersonaje,
     personajesDelUsuario,
-    buscarPersonajeDelUsuario
+    buscarPersonajesDelUsuario
 }

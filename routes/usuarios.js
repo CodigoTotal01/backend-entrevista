@@ -20,8 +20,9 @@ router.post('',
 router.put('/:id',
     [
         //ponemos los campos que deben de venir
-        check('nombre', "El nombre es Obligatorio").not().isEmpty(),
-        check('nickname', "El nickname es Obligatorio").not().isEmpty(),
+        check('id', 'No es un id valido').isMongoId(),
+        check('nombre', "El nombre es obligatorio").not().isEmpty(),
+        check('nickname', "El nickname es obligatorio").not().isEmpty(),
         validarCampos
     ]
     , actulizarUsuario);

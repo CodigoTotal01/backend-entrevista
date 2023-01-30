@@ -4,7 +4,7 @@ const coleccionesPermitidas = ( coleccion = '', colecciones = []) => {
     if ( !incluida ) {
         throw new Error(`La colección ${ coleccion } no es permitida, ${ colecciones }`);
     }
-    return true; //implicito en cada uno de estos metodos
+    return true;
 }
 
 module.exports ={
