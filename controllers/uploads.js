@@ -17,16 +17,16 @@ const fileUpload = async (req, res = response) => {
         switch (coleccion) {
             case 'usuarios':
                 modelo = await Usuario.findById(id);
-                //
-                // if (!model) {
-                //     return res.status(400).json({msg: `No existe el usuario con el id: ${id}`})
-                // }
+
+                if (!modelo) {
+                    return res.status(400).json({msg: `No existe el usuario con el id: ${id}`})
+                }
                 break;
             case 'personajes':
                 modelo = await Personaje.findById(id);
-                // if (!model) {
-                //     return res.status(400).json({msg: `No existe el producto con el id: ${id}`})
-                // }
+                if (!modelo) {
+                    return res.status(400).json({msg: `No existe el producto con el id: ${id}`})
+                }
                 break;
 
 

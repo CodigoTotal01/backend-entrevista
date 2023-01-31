@@ -1,11 +1,10 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-//sube el archivo acia nuestro servidor
+//sube el archivo hacia nuestro servidor
 const subirArchivo = ( files, extensionesValidas = ['png','jpg','jpeg'], carpeta = '' ) => {
 
     console.log("file", files);
 
-    console.log("carpeta", carpeta);
     return new Promise( (resolve, reject) => {
 
         const { imagen } = files;
@@ -30,8 +29,6 @@ const subirArchivo = ( files, extensionesValidas = ['png','jpg','jpeg'], carpeta
         });
 
     });
-
-
 
 }
 

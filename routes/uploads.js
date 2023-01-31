@@ -23,6 +23,9 @@ router.put('/:coleccion/:id',[
     validarCampos
 ] ,fileUpload );
 
+
+
+
 router.get('/:coleccion/:id', [
     check('id','El id debe de ser de mongo').isMongoId(),
     check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','personajes'] ) ),

@@ -20,6 +20,7 @@ router.post('/',
         check('nombre', "El nombre es obligatorio").not().isEmpty(),
         check('calificacion', "La calificación es obligatoria").not().isEmpty(),
         check('comentario', "El comentario es obligatorio").not().isEmpty(),
+        check('img', "La imagen es obligatorio").not().isEmpty(),
         validarCampos
     ]
     , crearPersonaje);

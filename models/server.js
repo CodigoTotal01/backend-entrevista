@@ -33,7 +33,7 @@ class Server{
     }
 
     routes() {
-        this.app.use('/api/auth', require('../routes/auth'));
+        this.app.use('/api', require('../routes/auth'));
         this.app.use('/api/usuarios', require('../routes/usuarios'));
         this.app.use('/api/personajes', require('../routes/personajes'));
         this.app.use('/api/uploads', require('../routes/uploads'));

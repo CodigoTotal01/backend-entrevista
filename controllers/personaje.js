@@ -14,7 +14,7 @@ const crearPersonaje = async (req, res = response) => {
 
     try{
         //por si ya existe en la lista
-        const existePersonaje = await Personaje.findOne({nombre: personaje.nombre});
+        const existePersonaje = await Personaje.findOne({nombre: personaje.nombre, usuario: personaje.usuario});
         if (existePersonaje) {
             return res.status(400).json({
                 ok: false,
