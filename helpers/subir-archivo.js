@@ -3,8 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 //sube el archivo hacia nuestro servidor
 const subirArchivo = ( files, extensionesValidas = ['png','jpg','jpeg'], carpeta = '' ) => {
 
-    console.log("file", files);
-
     return new Promise( (resolve, reject) => {
 
         const { imagen } = files;

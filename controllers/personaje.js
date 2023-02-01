@@ -28,7 +28,6 @@ const crearPersonaje = async (req, res = response) => {
             personaje
         })
     }catch (error){
-        console.log(error)
        return res.status(500).json({
             ok: false,
             msg: "No se pudo agregar el personaje a tu lista"
