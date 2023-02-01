@@ -1,7 +1,7 @@
 # backend-entrevista
 
 ## Para ejecutar el programa del backend
-* Ejecutar node index.js o nodemon index.js (no es necesario la extensión .js)
+* En la terminal : ejecutar node index.js o nodemon index.js (no es necesario la extensión .js)
 
 # Nota
 * Despues de ejecutarlo, ejecutar luego el programa del frontend → https://github.com/CodigoTotal01/entrevista-front
